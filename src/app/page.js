@@ -1,13 +1,13 @@
-import { Station } from "@/components/Station";
-import { Map } from "@/components/Map";
-import { Report } from "@/components/Report";
+import ClientComponentExample from "@/components/ClientComponentExample"
+import ServerComponentExample from "@/components/ServerComponentExample"
 
-export default async function Home() {
+const page = () => {
   return (
-    <div class="justify-between">
-    <Map />
-    <Report />
-    <Station />
-    </div>
+    <main className="flex flex-grow flex-col items-center justify-center space-y-10">
+      <ClientComponentExample />
+      <ServerComponentExample />
+    </main>
   )
 }
+
+export default page
