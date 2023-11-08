@@ -1,4 +1,5 @@
-import ClientComponentExample from "@/components/ClientComponentExample"
+import Map from "@/components/Map"
+import StationList from "@/components/StationList"
 import ServerComponentExample from "@/components/ServerComponentExample"
 import Link from 'next/link';
 import React from 'react';
@@ -7,13 +8,16 @@ import Image from 'next/image';
 const page = () => {
   return (
     <main className="flex flex-grow flex-col items-center justify-center space-y-10">
-      <ServerComponentExample />
+      <Map />
+
+      <StationList />
+      
 
       <Link href="stations/1">
         <div className="w-full p-2 border border-gray-500 rounded-md flex items-center">
           <div className="fw-3/10 h-full flex items-center justify-center">
             <Image
-              src="/icons/mapicon.svg"
+              src="/icons/exclamationcircle.svg"
               width={18}
               height={18}
               alt="Map icon"
@@ -26,7 +30,7 @@ const page = () => {
         </div>
         <div className="w-1/10 h-full flex items-center justify-center">
             <Image
-              src="/icons/mapicon.svg"
+              src="/icons/exclamationcircle.svg"
               width={18}
               height={18}
               alt="Map icon"

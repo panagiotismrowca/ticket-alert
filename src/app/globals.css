@@ -25,3 +25,17 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+#mapHeader > p {
+  display: block;
+}
+
+#mapHeader.active {
+  height: min-content;;
+}
+#mapHeader.active > img {
+  display: none;
+}
+#mapHeader.active > p {
+  display: block;
+}
