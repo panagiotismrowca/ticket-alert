@@ -5,9 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Oval } from 'react-loader-spinner';
-
-const LOADING_SPINNER_COLOR = '#0093D0';
-const LOADING_SPINNER_SECONDARY_COLOR = '#ffffff';
+import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/constants';
 
 const StationList = () => {
   const supabase = createClientComponentClient();
