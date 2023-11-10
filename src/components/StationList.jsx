@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { Oval } from 'react-loader-spinner';
 import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/constants';
 
+const goToStationIcon = '/icons/ellipsis-horizontal.svg';
+
 const StationList = () => {
   const supabase = createClientComponentClient();
 
@@ -70,32 +72,32 @@ const StationList = () => {
         stations?.length === 0 && <div className="flex justify-center items-center h-96 text-gray-50">Δεν βρέθηκαν στάσεις</div>
       )}
 
-      {stations &&
-        stations?.length > 0 &&
-        stations?.map((station) => (
-          <Link
-            key={`station_${station.station_id}`}
-            href={'stations/' + station.station_id}
-            className=" bg-slate-800 rounded-lg h-20 w-11/12 lg:w-8/12 flex"
-          >
-            <div className=" bg-slate-50 rounded-lg h-20 w-5/6">
-              <div className=" text-slate-800 font-bold h-11 my-auto p-3 mx-1"> {station.station_name} </div>
-              <div className="flex p-1 h-9 ml-2">
-                {station.routes?.map((route) => (
-                  <div
-                    key={`route_${route}`}
-                    className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"
-                  >
-                    {route}
+      <div className="flex flex-col md:flex-row md:flex-wrap">
+        {stations &&
+          stations?.length > 0 &&
+          stations?.map((station) => (
+            <div className="w-full md:w-1/2 p-2" key={`station_${station.station_id}`}>
+              <Link href={'stations/' + station.station_id} className=" bg-slate-800 rounded-lg h-20 w-full flex">
+                <div className=" bg-slate-50 rounded-lg h-20 w-5/6">
+                  <div className=" text-slate-800 font-bold h-11 my-auto p-3 mx-1"> {station.station_name} </div>
+                  <div className="flex p-1 h-9 ml-2">
+                    {station.routes?.map((route) => (
+                      <div
+                        key={`route_${route}`}
+                        className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"
+                      >
+                        {route}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+                <div className="m-auto">
+                  <Image src={goToStationIcon} alt="icon" width={32} height={32} />
+                </div>
+              </Link>
             </div>
-            <div className="m-auto">
-              <Image src="/icons/arrow-small-right.svg" alt="icon" width={32} height={32} />
-            </div>
-          </Link>
-        ))}
+          ))}
+      </div>
     </>
   );
 };
