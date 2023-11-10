@@ -53,7 +53,7 @@ const StationList = () => {
           />
 
           {stations?.map((station) => (
-              <a href={'stations/' + station.station_id} className=" bg-slate-800 rounded-lg h-20 w-11/12 flex">
+              <Link href={'stations/' + station.station_id} className=" bg-slate-800 rounded-lg h-20 w-11/12 lg:w-8/12 flex">
                   <div className=" bg-slate-50 rounded-lg h-20 w-5/6">
                       <div className=" text-slate-800 font-bold h-11 my-auto p-3 mx-1"> {station.station_name} </div>
                       <div className="flex p-1 h-9 ml-2">
@@ -69,7 +69,7 @@ const StationList = () => {
                              height={32}
                       />
                   </div>
-              </a>
+              </Link>
           ) ) }
       </>
     )

@@ -16,14 +16,15 @@ const Map = () => {
       onClick={toggleMap}
       className={`w-full h-72 p-4 m-0 shadow-md bg-gray-100 ${isActive ? 'active' : ''}`}
       id="mapHeader"
+      style={{ overflowY: 'auto' }}
     >
       <Image  src="/map.svg"
-              width={10000}
-              height={10000}
+              width={1000}
+              height={1000}
               alt="Report icon"
-              className={`h-full`}
+              className={`h-full overflow-scroll`}
       />
-      {!!isActive && <p className=' text-center ' > See map </p>}
+      {!!isActive && <p className=' font-medium text-center ' > See map </p>}
     </div>
   );
 };
