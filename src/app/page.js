@@ -11,15 +11,3 @@ export default function Home() {
     </main>
   );
 }
-
-// export default async function Home() {
-//   // const data = await getStations();
-//   // console.log(data);
-//   return (
-//     <div class="justify-between">
-//       <Map />
-//       <Report />
-//       <Station />
-//     </div>
-//   );
-// }
