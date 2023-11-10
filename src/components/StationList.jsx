@@ -83,15 +83,14 @@ const StationList = () => {
             <div className=" bg-slate-50 rounded-lg h-20 w-5/6">
               <div className=" text-slate-800 font-bold h-11 my-auto p-3 mx-1"> {station.station_name} </div>
               <div className="flex p-1 h-9 ml-2">
-                {station.routes.includes(1) && (
-                  <div className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"> 1 </div>
-                )}
-                {station.routes.includes(2) && (
-                  <div className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"> 2 </div>
-                )}
-                {station.routes.includes(3) && (
-                  <div className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"> 3 </div>
-                )}
+                {station.routes?.map((route) => (
+                  <div
+                    key={`route_${route}`}
+                    className="font-bold  border-slate-300 border-2 text-slate-900 text-center text-xs rounded-md w-5 h-5 mx-1"
+                  >
+                    {route}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="m-auto">
