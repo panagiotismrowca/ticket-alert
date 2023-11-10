@@ -74,9 +74,9 @@ const StationList = () => {
 
       {stations &&
         stations?.length > 0 &&
-        stations?.map((station, index) => (
+        stations?.map((station) => (
           <Link
-            key={`station_${index}`}
+            key={`station_${station.station_id}`}
             href={'stations/' + station.station_id}
             className=" bg-slate-800 rounded-lg h-20 w-11/12 lg:w-8/12 flex"
           >
