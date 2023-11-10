@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export const Header = () => {
   return (
-    <header className="flex flex-row backdrop-blur-lg bg-slate-900/90 p-4 top-0 sticky w-full">
+    <header className="flex flex-row backdrop-blur-lg bg-slate-900/90 pl-4 p-3 top-0 sticky w-full">
       <Link href="/">
         <Image
           className={`flex overflow-scroll w-14 h-auto`}
