@@ -1,8 +1,4 @@
-import ClientComponentExample from '@/components/ClientComponentExample';
-import ServerComponentExample from '@/components/ServerComponentExample';
-import Link from 'next/link';
-import StaredStations from '@/components/StaredStations';
-import Message from '@/components/Message';
+// import Message from '@/components/Message';
 import Map from '@/components/Map';
 import StationList from '@/components/StationList';
 
