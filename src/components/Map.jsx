@@ -1,10 +1,9 @@
-"use client"
+'use client';
 
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 const Map = () => {
-
   const [isActive, setIsActive] = useState(false);
 
   const toggleMap = () => {
@@ -18,13 +17,8 @@ const Map = () => {
       id="mapHeader"
       style={{ overflowY: 'auto' }}
     >
-      <Image  src="/map.svg"
-              width={1000}
-              height={1000}
-              alt="Report icon"
-              className={`h-full overflow-scroll`}
-      />
-      {!!isActive && <p className=' font-medium text-center ' > See map </p>}
+      <Image src="/athens-metro-map.svg" width={1000} height={1000} alt="Report icon" className={`h-full overflow-scroll`} />
+      {!!isActive && <p className=" font-medium text-center "> See map </p>}
     </div>
   );
 };
@@ -51,7 +45,7 @@ export default Map;
 
 //   useEffect(() => {
 //     handleClick();
-//   }, []); 
+//   }, []);
 
 //   return (
 //     <button onClick={handleClick}>{data ? data : "Client Component"}ggggggggggg</button>
