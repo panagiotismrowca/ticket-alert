@@ -5,12 +5,10 @@ import Image from 'next/image';
 
 const Map = () => {
 
-  
   const [isActive, setIsActive] = useState(false);
 
   const toggleMap = () => {
     setIsActive(!isActive);
-    alert('aaa')
   };
 
   return (
@@ -19,14 +17,13 @@ const Map = () => {
       className={`w-full h-72 p-4 m-0 shadow-md bg-gray-100 ${isActive ? 'active' : ''}`}
       id="mapHeader"
     >
-      <Image  src="/icons/exclamationcircle.svg"
-              width={100}
-              height={1000}
+      <Image  src="/map.svg"
+              width={10000}
+              height={10000}
               alt="Report icon"
               className={`h-full`}
       />
-      <p className=' text-center ' > See map </p>
-
+      {!!isActive && <p className=' text-center ' > See map </p>}
     </div>
   );
 };

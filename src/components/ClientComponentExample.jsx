@@ -1,7 +1,7 @@
 "use client"
 
 import { useState , useEffect } from "react"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { c } from "@supabase/auth-helpers-nextjs"
 
 const ClientComponentExample = () => {
   const supabase = createClientComponentClient()

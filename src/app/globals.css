@@ -29,14 +29,18 @@ body {
 
 #mapHeader > p {
   display: block;
+  transition-duration: 300ms;
 }
 
 #mapHeader.active {
-  height: min-content;;
+  height: min-content;
+  transition-duration: 300ms;
 }
 #mapHeader.active > img {
   display: none;
+  transition-duration: 300ms;
 }
 #mapHeader.active > p {
   display: block;
+  transition-duration: 300ms;
 }
