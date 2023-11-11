@@ -1,7 +1,7 @@
 'use client';
 
 import { Oval } from 'react-loader-spinner';
-import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/constants';
+import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/utils/constants';
 
 const Loading = () => {
   return (
