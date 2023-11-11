@@ -8,6 +8,10 @@ const ClientComponentExample = () => {
 
   const [data, setData] = useState();
 
+  // if (typeof window !== 'undefined') {
+  //   localStorage?.setItem('someKey', JSON.stringify(someData));
+  // }
+
   const handleClick = async () => {
     const { data, error } = await supabase.from('stations').select('*').eq('id', 1);
     setData(JSON.stringify(data));

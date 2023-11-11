@@ -20,10 +20,6 @@ async function getStations() {
   const { data: stations, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
 
   if (stations) {
-    if (typeof window !== 'undefined') {
-      localStorage?.setItem('stations', JSON.stringify(data));
-    }
-
     return stations;
   } else {
     console.log(error);
