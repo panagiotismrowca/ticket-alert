@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 // import Message from '@/components/Message';
 import Map from '@/components/Map';
-import StationList from '@/components/StationList';
+import StationsList from '@/components/StationsList';
 import Loading from '@/components/Loading';
 
 async function getStations() {
@@ -45,7 +45,7 @@ export default async function Home() {
         <Map />
       </Suspense>
       <Suspense fallback={<Loading />}>
-        <StationList stations={stations} />
+        <StationsList stations={stations} />
       </Suspense>
     </main>
   );
