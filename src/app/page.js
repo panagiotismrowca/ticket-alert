@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 // import Message from '@/components/Message';
@@ -37,12 +36,8 @@ export default async function Home() {
   return (
     <main className="flex flex-grow flex-col items-center justify-center space-y-10">
       {/* <Message /> */}
-      <Suspense fallback={<Loading />}>
-        <Map />
-      </Suspense>
-      <Suspense fallback={<Loading />}>
-        <StationsList stations={stations} />
-      </Suspense>
+      <Map />
+      <StationsList stations={stations} />
     </main>
   );
 }
