@@ -1,21 +1,30 @@
 import { Suspense } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
 // import Message from '@/components/Message';
 import Map from '@/components/Map';
 import StationList from '@/components/StationList';
 import Loading from '@/components/Loading';
 
 async function getStations() {
-  const supabase = createClientComponentClient();
+  const cookieStore = cookies();
+  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+    cookies: {
+      get(name) {
+        return cookieStore.get(name)?.value;
+      },
+    },
+  });
 
-  const { data, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
+  console.log('fetching stations');
+  const { data: stations, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
 
-  if (data) {
+  if (stations) {
     if (typeof window !== 'undefined') {
       localStorage?.setItem('stations', JSON.stringify(data));
     }
 
-    return data;
+    return stations;
   } else {
     console.log(error);
   }
@@ -24,6 +33,10 @@ async function getStations() {
 
 export default async function Home() {
   const stations = await getStations();
+
+  if (!stations) {
+    return <Loading />;
+  }
 
   return (
     <main className="flex flex-grow flex-col items-center justify-center space-y-10">
