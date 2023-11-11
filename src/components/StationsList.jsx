@@ -46,7 +46,7 @@ const StationsList = ({ stations: stationsProp }) => {
       station.station_name.toUpperCase().includes(normalizedKeyword.toUpperCase()),
     );
 
-    console.log('filteredStations', filteredStations);
+    // console.log('filteredStations', filteredStations);
 
     setStations(filteredStations);
   };
