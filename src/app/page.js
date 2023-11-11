@@ -1,4 +1,3 @@
-// import { supabaseServerClient } from '@/utils/supabaseClient';
 // import Message from '@/components/Message';
 import Map from '@/components/Map';
 import StationsList from '@/components/StationsList';
