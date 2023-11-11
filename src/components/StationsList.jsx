@@ -1,45 +1,41 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useState, useEffect, useRef /*, useCallback*/ } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Oval } from 'react-loader-spinner';
-import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/constants';
+import StationsNotFound from '@/components/StationsNotFound';
 
 const goToStationIcon = '/icons/ellipsis-horizontal.svg';
 const goToStationIconMobile = '/icons/arrow-small-right.svg';
 
-const StationList = () => {
-  const supabase = createClientComponentClient();
-
-  const [stations, setStations] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const storedStations = useRef();
-
-  const getStations = useCallback(async () => {
-    const { data, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
-
-    if (data) {
-      setStations(data);
-      localStorage.setItem('stations', JSON.stringify(data));
-      setIsLoading(false);
-    } else {
-      console.log(error);
-    }
-  }, [supabase]);
+const StationsList = ({ stations: stationsProp }) => {
+  const [stations, setStations] = useState(stationsProp ?? null);
+  const storedStations = useRef(null);
 
   useEffect(() => {
-    storedStations.current = JSON.parse(localStorage.getItem('stations'));
-
-    if (storedStations.current) {
-      setStations(storedStations.current);
-      setIsLoading(false);
+    if (stations) {
+      console.log('[localStorage] setting stations');
+      localStorage.setItem('stations', JSON.stringify(stations));
+      storedStations.current = stations;
     } else {
-      console.log('fetching stations');
-      getStations();
+      console.log('[localStorage] getting stations');
+      storedStations.current = JSON.parse(localStorage.getItem('stations'));
+
+      if (storedStations.current) {
+        console.log('[localStorage] stations found');
+        setStations(storedStations.current);
+      }
     }
-  }, [getStations]);
+
+    // if (storedStations.current) {
+    //   setStations(storedStations.current);
+    //   // setIsLoading(false);
+    // } else {
+    //   console.log('fetching stations');
+    //   // getStations();
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const searchStations = (keyword) => {
     const initialStations = storedStations.current ?? stations;
@@ -49,6 +45,8 @@ const StationList = () => {
     const filteredStations = initialStations.filter((station) =>
       station.station_name.toUpperCase().includes(normalizedKeyword.toUpperCase()),
     );
+
+    // console.log('filteredStations', filteredStations);
 
     setStations(filteredStations);
   };
@@ -66,13 +64,7 @@ const StationList = () => {
       />
 
       <div className="flex w-full px-2 md:px-3 flex-col justify-center">
-        {isLoading ? (
-          <div className="flex justify-center items-center h-96">
-            <Oval color={LOADING_SPINNER_COLOR} secondaryColor={LOADING_SPINNER_SECONDARY_COLOR} />
-          </div>
-        ) : (
-          stations?.length === 0 && <div className="flex justify-center items-center h-96 text-gray-50">Δεν βρέθηκαν στάσεις</div>
-        )}
+        {(stations?.length === 0 || stations === null) && <StationsNotFound />}
 
         <div className="flex flex-col md:flex-row md:flex-wrap">
           {stations &&
@@ -106,4 +98,4 @@ const StationList = () => {
   );
 };
 
-export default StationList;
+export default StationsList;
