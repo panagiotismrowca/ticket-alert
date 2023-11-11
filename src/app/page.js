@@ -1,33 +1,13 @@
-import { cookies } from 'next/headers';
-import { createServerClient } from '@supabase/ssr';
+// import { supabaseServerClient } from '@/utils/supabaseClient';
 // import Message from '@/components/Message';
 import Map from '@/components/Map';
 import StationsList from '@/components/StationsList';
 import Loading from '@/components/Loading';
 
-async function getStations() {
-  const cookieStore = cookies();
-  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
-    cookies: {
-      get(name) {
-        return cookieStore.get(name)?.value;
-      },
-    },
-  });
-
-  console.log('fetching stations');
-  const { data: stations, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
-
-  if (stations) {
-    return stations;
-  } else {
-    console.log(error);
-  }
-  return null;
-}
+import { getStationsServer } from '@/lib/stationService';
 
 export default async function Home() {
-  const stations = await getStations();
+  const stations = await getStationsServer();
 
   if (!stations) {
     return <Loading />;
