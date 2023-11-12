@@ -1,47 +1,59 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useState, useEffect, useRef /*, useCallback*/ } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Oval } from 'react-loader-spinner';
-import { LOADING_SPINNER_COLOR, LOADING_SPINNER_SECONDARY_COLOR } from '@/constants';
+import StationsNotFound from '@/components/StationsNotFound';
+
+import { getNumbersOnlyInt } from '@/utils/helpers';
 
 const goToStationIcon = '/icons/ellipsis-horizontal.svg';
 const goToStationIconMobile = '/icons/arrow-small-right.svg';
 
-const StationList = () => {
-  const supabase = createClientComponentClient();
+const filters = ['Όλοι', 'M1', 'M2', 'M3'];
 
-  const [stations, setStations] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const storedStations = useRef();
-
-  const getStations = useCallback(async () => {
-    const { data, error } = await supabase.from('stations').select('*').order('station_name', 'asc');
-
-    if (data) {
-      setStations(data);
-      localStorage.setItem('stations', JSON.stringify(data));
-      setIsLoading(false);
-    } else {
-      console.log(error);
-    }
-  }, [supabase]);
+const StationsList = ({ stations: stationsProp }) => {
+  const [stations, setStations] = useState(stationsProp ?? null);
+  const [selectedFilter, setSelectedFilter] = useState(filters[0]);
+  const storedStations = useRef(null);
 
   useEffect(() => {
-    storedStations.current = JSON.parse(localStorage.getItem('stations'));
-
-    if (storedStations.current) {
-      setStations(storedStations.current);
-      setIsLoading(false);
+    if (stations) {
+      console.log('[localStorage] setting stations');
+      localStorage.setItem('stations', JSON.stringify(stations));
+      storedStations.current = stations;
     } else {
-      console.log('fetching stations');
-      getStations();
+      console.log('[localStorage] getting stations');
+      storedStations.current = JSON.parse(localStorage.getItem('stations'));
+
+      if (storedStations.current) {
+        console.log('[localStorage] stations found');
+        setStations(storedStations.current);
+      }
     }
-  }, [getStations]);
+
+    // if (storedStations.current) {
+    //   setStations(storedStations.current);
+    //   // setIsLoading(false);
+    // } else {
+    //   console.log('fetching stations');
+    //   // getStations();
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (selectedFilter === filters[0]) {
+      setStations(storedStations.current);
+    } else {
+      const filteredStations = storedStations.current.filter((station) => station.routes.includes(getNumbersOnlyInt(selectedFilter)));
+      setStations(filteredStations);
+    }
+  }, [selectedFilter]);
 
   const searchStations = (keyword) => {
+    setSelectedFilter(filters[0]);
+
     const initialStations = storedStations.current ?? stations;
 
     const normalizedKeyword = keyword.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -66,13 +78,25 @@ const StationList = () => {
       />
 
       <div className="flex w-full px-2 md:px-3 flex-col justify-center">
-        {isLoading ? (
-          <div className="flex justify-center items-center h-96">
-            <Oval color={LOADING_SPINNER_COLOR} secondaryColor={LOADING_SPINNER_SECONDARY_COLOR} />
-          </div>
-        ) : (
-          stations?.length === 0 && <div className="flex justify-center items-center h-96 text-gray-50">Δεν βρέθηκαν στάσεις</div>
-        )}
+        <div className="flex flex-row px-1 justify-left items-center">
+          {filters.map((filter) => (
+            <div
+              key={`filter_${filter}`}
+              className={`flex flex-row justify-center items-center rounded-lg border border-slate-300 p-1 m-1
+                          ${selectedFilter === filter ? 'bg-slate-800 font-bold text-sm' : 'bg-slate-50  font-bold text-sm'}`}
+              onClick={() => setSelectedFilter(filter)}
+            >
+              <div
+                className={`font-bold text-sm
+              ${selectedFilter === filter ? ' text-slate-50' : ' text-slate-800'}`}
+              >
+                {filter}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {(stations?.length === 0 || stations === null) && <StationsNotFound />}
 
         <div className="flex flex-col md:flex-row md:flex-wrap">
           {stations &&
@@ -106,4 +130,4 @@ const StationList = () => {
   );
 };
 
-export default StationList;
+export default StationsList;

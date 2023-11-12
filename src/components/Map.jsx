@@ -1,14 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Image from 'next/image';
+import Loading from '@/components/Loading';
 
 const Map = () => {
   const [isActive, setIsActive] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const toggleMap = () => {
     setIsActive(!isActive);
   };
+
+  const onLoad = () => setIsLoaded(true);
 
   return (
     <div
@@ -17,7 +22,21 @@ const Map = () => {
       id="mapHeader"
       style={{ overflowY: 'auto' }}
     >
-      <Image src="/athens-metro-map.svg" width={1000} height={1000} alt="Report icon" className={`h-full overflow-scroll`} />
+      {isLoaded ? (
+        <Image
+          src="/athens-metro-map.svg"
+          width={1000}
+          height={1000}
+          alt="Report icon"
+          className={`h-full overflow-scroll`}
+          // onLoad={onLoad}
+        />
+      ) : (
+        <div className="flex justify-center items-center">
+          <Loading />
+        </div>
+      )}
+
       {!!isActive && <p className=" font-medium text-center "> See map </p>}
     </div>
   );
